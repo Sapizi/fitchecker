@@ -74,31 +74,41 @@ export default function AdminLogin() {
   const onLoginSubmit = async (data: LoginFormData) => {
     try {
       const { username, password } = data;
-
-      const { data: admin, error } = await supabase
+  
+      const { data: admin, error: adminError } = await supabase
         .from('admins')
         .select('username, password')
         .eq('username', username)
         .single();
-
-      if (error || !admin) {
-        setLoginError('Неверный логин или пароль');
+  
+      if (admin && admin.password === password) {
+        setLoginError('');
+        localStorage.setItem('isAdminLoggedIn', 'true');
+        router.push('/pages/mainPage');
         return;
       }
 
-      if (admin.password !== password) {
-        setLoginError('Неверный логин или пароль');
+      const { data: client, error: clientError } = await supabase
+        .from('clients')
+        .select('name, password')
+        .eq('name', username)
+        .single();
+  
+      if (client && client.password === password) {
+
+        setLoginError('');
+        localStorage.setItem('isClientLoggedIn', 'true');
+        router.push('/pages/userPage');
         return;
       }
 
-      setLoginError('');
-      localStorage.setItem('isAdminLoggedIn', 'true');
-      router.push('/pages/mainPage');
+      setLoginError('Неверный логин или пароль');
     } catch (err) {
       setLoginError('Произошла ошибка при входе');
       console.error(err);
     }
   };
+  
   return (
     <AllMain>
       <Forma onSubmit={handleSubmitLogin(onLoginSubmit)}>
