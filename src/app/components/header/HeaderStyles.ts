@@ -12,3 +12,17 @@ export const HeaderLogo = styled.h1`
     font-weight: 500;
     margin-left: 62px;
 `
+export const LogoutButton = styled.button`
+    padding: 0.5rem 1rem;
+    background-color: #e97c00;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #d16b00;
+    }
+`;

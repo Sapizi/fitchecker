@@ -1,5 +1,6 @@
 import styled from "styled-components";
 export const ClientList = styled.ul`
+    margin-top: 20px;
     list-style: none;
     padding: 0;
     display: flex;

@@ -19,8 +19,8 @@ import {
 } from './ClientsListStyles';
 import { Wrapper } from '@/app/GlobalStyles';
 import { Title } from '../mainPage/MainStyles';
+import Link from 'next/link';
 
-// Тип для клиента на основе структуры таблицы
 type Client = {
     id: number;
     created_at: string;
@@ -61,19 +61,15 @@ const ClientsPage = () => {
         fetchClients();
     }, []);
 
-    // Начало редактирования клиента
     const handleEdit = (client: Client) => {
         setEditingClientId(client.id);
         setEditFormData({ ...client });
     };
 
-    // Обработчик изменения полей формы редактирования
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setEditFormData((prev) => (prev ? { ...prev, [name]: value } : null));
     };
-
-    // Сохранение изменений
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!editFormData) return;
@@ -111,13 +107,12 @@ const ClientsPage = () => {
         }
     };
 
-    // Отмена редактирования
+
     const handleCancel = () => {
         setEditingClientId(null);
         setEditFormData(null);
     };
 
-    // Удаление клиента
     const handleDelete = async (id: number) => {
         if (!confirm('Вы уверены, что хотите удалить этого клиента?')) return;
 
@@ -141,8 +136,8 @@ const ClientsPage = () => {
         <>
             <Header />
             <Wrapper>
+                <Link href={'/pages/mainPage'}>На главную</Link>
                 <Title>Список клиентов</Title>
-
                 {loading && <LoadingText>Загрузка...</LoadingText>}
                 {error && <ErrorText>{error}</ErrorText>}
 

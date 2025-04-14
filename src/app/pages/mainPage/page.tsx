@@ -5,6 +5,7 @@ import Header from "@/app/components/header/Header";
 import { BigText, CardButton, CardText, MainBlock, MainContent, Title, DateTimeBlock, DateTimeText, ButtonsBlock, LinkButton } from "./MainStyles";
 import { Wrapper } from "@/app/GlobalStyles";
 import { supabase } from '../../lib/supbase';
+import { withAuth } from '@/app/withAuth';
 
 const Main = () => {
     const [clientCount, setClientCount] = useState<number | null>(null);
@@ -79,5 +80,4 @@ const Main = () => {
         </>
     );
 };
-
-export default Main;
+export default withAuth(Main, true);
